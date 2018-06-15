@@ -1,0 +1,161 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Business Logic Test</title>
+    <icon src="lblogo.png"></icon>
+    <style type="text/css">
+        @import "js/dijit/themes/claro/claro.css";
+        @import "js/dojo/resources/dojo.css";
+        @import "style.css";
+        @import "js/dijit/themes/nihilo/nihilo.css";
+        @import "js/dojox/grid/resources/nihiloGrid.css";
+    </style>
+    <script src="js/dojo/dojo.js" data-dojo-config="parseOnLoad: true"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="../../_common/demo.css" media="screen">
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dijit/themes/claro/claro.css" media="screen">
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojox/grid/resources/Grid.css" />
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojox/grid/resources/claroGrid.css" />
+    <link rel="stylesheet" href="style.css" media="screen">
+</head>
+<body class="claro">
+<div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'headline'" id="borderContainerTop" style="width:100%; height:8%; background: #4e4e4e;">
+    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'" style="background: #ffffff; padding: 0; height: 100%">
+        <div>
+            <img style="border: none; height:75%;" src="lblogo.png" alt="logo">
+        </div>
+    </div>
+</div>
+<div data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="design:'sidebar', gutters:true, liveSplitters:true" id="borderContainer" style="width:100%; height:100%; padding-all:5px; background: #4e4e4e;">
+    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'right'" style="width: 20%;">
+        <h2 id="name"></h2>
+        <p id="nameText"></p>
+        <h2 id="patronymic"></h2>
+        <p id="patronymicText"></p>
+        <h2 id="surname"></h2>
+        <p id="surnameText"></p>
+        <h2 id="sex"></h2>
+        <p id="sexText"></p>
+        <h2 id="number"></h2>
+        <p id="numberText"></p>
+        <h2 id="team"></h2>
+        <p id="teamText"></p>
+        <h2 id="city"></h2>
+        <p id="cityText"></p>
+        <h2 id="bornDate"></h2>
+        <p id="bornDateText"></p>
+        <h2 id="regDate"></h2>
+        <p id="regDateText"></p>
+    </div>
+    <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="splitter:true, region:'center'" style="width: 80%;">
+        <div id="grid" style="width: 100%; height: 90%"></div>
+        <!-- load dojo and provide config via data attribute -->
+        <script src="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js" data-dojo-config="isDebug: true, async: true"></script>
+        <script>
+            initGrid(grid);
+        </script>
+        <button data-dojo-type="dijit/form/Button" type="button" onClick="myDialog.show();">
+            Add Row
+        </button>
+        <button data-dojo-type="dijit/form/Button" type="button" onClick="myDialogE.show(); editDialogCreate();">
+            Edit Selected Rows
+        </button>
+        <button data-dojo-type="dijit/form/Button" type="button" onClick="remItem();">
+            Remove Selected Rows
+        </button>
+    </div>
+    <div data-dojo-type="dijit/Dialog" data-dojo-id="myDialog" title="Добавить элемент">
+        <table class="dijitDialogPaneContentArea">
+            <tr>
+                <td><label for="surnameText">Фамилия:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="surname" id="surnameA"></td>
+            </tr>
+            <tr>
+                <td><label for="nameText">Имя:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="name" id="nameA"></td>
+            </tr>
+            <tr>
+                <td><label for="patronymicText">Отчество:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="patronymiс" id="patronymiсA"></td>
+            </tr>
+            <tr>
+                <td><label for="numberText">Номер:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="number" id="numberA"></td>
+            </tr>
+            <tr>
+                <td><label for="teamText">Команда:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="team" id="teamA"></td>
+            </tr>
+            <tr>
+                <td><label for="cityText">Город:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="city" id="cityA"></td>
+            </tr>
+            <tr>
+                <td><label for="sexText">Пол:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="sex" id="sexA"></td>
+            </tr>
+            <tr>
+                <td><label for="bornDateText">Дата рождения:</label></td>
+                <td><input data-dojo-type="dijit/form/DateTextBox"  name="bornDate" id="bornA"></td>
+            </tr>
+            <tr>
+                <td><label for="regDateText">Дата регистрации:</label></td>
+                <td><input data-dojo-type="dijit/form/DateTextBox"  name="regDate" id="regA"></td>
+            </tr>
+        </table>
+
+        <div class="dijitDialogPaneActionBar">
+            <button data-dojo-type="dijit/form/Button" type="submit" id="ok" onclick="addItem()">OK</button>
+            <button data-dojo-type="dijit/form/Button" type="button" data-dojo-props="onClick:function(){myDialog.hide();}"
+                    id="cancel">Cancel</button>
+        </div>
+    </div>
+    <div data-dojo-type="dijit/Dialog" data-dojo-id="myDialogE" title="Редактировать элемент" onload="editItem();">
+        <table class="dijitDialogPaneContentArea">
+            <tr>
+                <td><label for="surnameText">Фамилия:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="surname" id="surnameE"></td>
+            </tr>
+            <tr>
+                <td><label for="nameText">Имя:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="name" id="nameE"></td>
+            </tr>
+            <tr>
+                <td><label for="patronymicText">Отчество:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="patronymic" id="patronymicE"></td>
+            </tr>
+            <tr>
+                <td><label for="numberText">Номер:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="number" id="numberE"></td>
+            </tr>
+            <tr>
+                <td><label for="teamText">Команда:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="team" id="teamE"></td>
+            </tr>
+            <tr>
+                <td><label for="cityText">Город:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="city" id="cityE"></td>
+            </tr>
+            <tr>
+                <td><label for="sexText">Пол:</label></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name="sex" id="sexE"></td>
+            </tr>
+            <tr>
+                <td><label for="bornDateText">Дата рождения:</label></td>
+                <td><input data-dojo-type="dijit/form/DateTextBox"  name="bornDate" id="bornE"></td>
+            </tr>
+            <tr>
+                <td><label for="regDateText">Дата регистрации:</label></td>
+                <td><input data-dojo-type="dijit/form/DateTextBox"  name="regDate" id="regE"></td>
+            </tr>
+        </table>
+
+        <div class="dijitDialogPaneActionBar">
+            <button data-dojo-type="dijit/form/Button" type="submit" id="okE" onclick="editItem()">OK</button>
+            <button data-dojo-type="dijit/form/Button" type="button" data-dojo-props="onClick:function(){myDialogE.hide();}"
+                    id="cancelE">Cancel</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
